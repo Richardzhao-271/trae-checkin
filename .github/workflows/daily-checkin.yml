@@ -1,0 +1,18 @@
+name: Trae 每日签到
+
+on:
+  schedule:
+    # UTC 01:00 = 北京时间 09:00（Trae 积分按天刷新，上午时段签到最稳）
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+
+jobs:
+  checkin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 运行签到脚本
+        env:
+          TRAE_TOKEN: ${{ secrets.TRAE_TOKEN }}
+        run: python3 checkin.py
